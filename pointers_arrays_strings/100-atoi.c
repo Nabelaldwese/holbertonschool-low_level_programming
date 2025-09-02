@@ -8,10 +8,10 @@
  */
 int _atoi(char *s)
 {
-	unsigned int num = 0;
-	int sign = 1;
 	int i = 0;
-	int started = 0;
+	int sign = 1;     /* +1 أو -1 حسب عدد علامات السالب */
+	int started = 0;  /* متى بدأنا نقرأ أرقام */
+	int res = 0;      /* نبني القيمة دائماً كسالب لتفادي مشكلة INT_MIN */
 
 	while (s[i] != '\0')
 	{
@@ -22,16 +22,15 @@ int _atoi(char *s)
 		else if (s[i] >= '0' && s[i] <= '9')
 		{
 			started = 1;
-			num = num * 10 + (s[i] - '0');
+			/* ابنِ القيمة كسالب: res = res*10 - digit */
+			res = res * 10 - (s[i] - '0');
 		}
 		else if (started)
-			break;
+			break; /* توقف بعد انتهاء كتلة الأرقام */
 		i++;
 	}
 
-	if (sign == -1)
-		return (-((int)num));
-	else
-		return ((int)num);
+	/* إن كانت الإشارة موجبة أعد -res، وإلا أعد res كما هو */
+	return (sign > 0) ? -res : res;
 }
 
