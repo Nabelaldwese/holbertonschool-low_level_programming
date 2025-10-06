@@ -2,10 +2,8 @@
 #include "lists.h"
 
 /**
- * free_list - frees a list_t list
+ * free_list - free a list_t list
  * @head: pointer to the head of the list
- *
- * Return: nothing
  */
 void free_list(list_t *head)
 {
@@ -13,10 +11,14 @@ void free_list(list_t *head)
 
 	while (head)
 	{
-		temp = head->next; /* حفظ المؤشر للعقدة التالية */
-		free(head->str);   /* تحرير السلسلة النصية داخل العقدة */
-		free(head);        /* تحرير العقدة نفسها */
-		head = temp;       /* الانتقال للعقدة التالية */
+		/* save next node pointer */
+		temp = head->next;
+
+		/* free string then the node */
+		free(head->str);
+		free(head);
+
+		head = temp;
 	}
 }
 
