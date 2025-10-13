@@ -43,17 +43,23 @@ int main(int ac, char **av)
 
 	while ((r = read(fd_from, buffer, BUFSIZE)) > 0)
 	{
-		w = write(fd_to, buffer, r);
-		if (w == -1 || w != r)
+		ssize_t written = 0;
+
+		while (written < r)
 		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
-			close(fd_from);
-			close(fd_to);
-			exit(99);
+			w = write(fd_to, buffer + written, r - written);
+			if (w == -1)
+			{
+				dprintf(STDERR_FILENO, "Error: Can't write to %s\n", av[2]);
+				close(fd_from);
+				close(fd_to);
+				exit(99);
+			}
+			written += w;
 		}
 	}
 
-	/* تحقق من فشل read */
+	/* read() فشل */
 	if (r == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", av[1]);
