@@ -13,12 +13,6 @@
  * @av: argument vector
  *
  * Return: 0 on success, exits with specific codes on error
- *
- * Errors:
- * 97: wrong argument count
- * 98: can't read from file_from
- * 99: can't write to/create file_to
- * 100: can't close a file descriptor
  */
 int main(int ac, char **av)
 {
@@ -28,7 +22,7 @@ int main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", av[0]);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 
