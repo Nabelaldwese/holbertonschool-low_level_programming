@@ -1,0 +1,46 @@
+
+#ifndef HASH_TABLES_H
+#define HASH_TABLES_H
+
+#include <stdlib.h>
+#include <stdio.h>
+
+/**
+ * struct hash_node_s - Node of a hash table (chaining)
+ * @key: Key string (must be unique in the hash table)
+ * @value: Value string associated with the key
+ * @next: Pointer to the next node in the collision list
+ *
+ * Description: This node is used for separate chaining inside each
+ * bucket of the hash table array.
+ */
+typedef struct hash_node_s
+{
+	char *key;
+	char *value;
+	struct hash_node_s *next;
+} hash_node_t;
+
+/**
+ * struct hash_table_s - Hash table data structure
+ * @size: Number of buckets (size of the array)
+ * @array: Array of pointers to the first node of each bucket list
+ *
+ * Description: A basic hash table using separate chaining to handle
+ * collisions. Each index of @array is a singly linked list of
+ * hash_node_t nodes.
+ */
+typedef struct hash_table_s
+{
+	unsigned long int size;
+	hash_node_t **array;
+} hash_table_t;
+
+/* Task 0 */
+hash_table_t *hash_table_create(unsigned long int size);
+
+/* Helper for tests (not required by task 0) */
+void hash_table_delete(hash_table_t *ht);
+
+#endif /* HASH_TABLES_H */
+
